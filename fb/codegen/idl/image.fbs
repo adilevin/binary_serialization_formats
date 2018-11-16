@@ -1,0 +1,14 @@
+namespace generated_code;
+
+struct Dimensions {
+	width: uint16;
+	height: uint16;
+}
+
+table Image {
+  dim: Dimensions;
+  pixels: [ubyte];
+  timestamp: uint64;
+}
+
+root_type Image;
