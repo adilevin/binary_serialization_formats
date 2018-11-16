@@ -1,3 +1,7 @@
 /protobuf/js/node_modules/
 /protobuf/js/*.bin
 *.pyc
+/fb/fb.VC.db
+/fb/fb.VC.VC.opendb
+/fb/ipch
+*.suo

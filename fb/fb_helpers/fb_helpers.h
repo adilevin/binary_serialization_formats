@@ -45,15 +45,15 @@ namespace fb_helpers {
 
 		BorrowedBuffer(char* buf, size_t _buf_size) :
 			CustomAllocator(buf, roundDownToAlignment(_buf_size)),
-			fbb(roundDownToAlignment(_buf_size), this, false, buffer_minalign) {}
+			_fbb(roundDownToAlignment(_buf_size), this, false, buffer_minalign) {}
 
-		flatbuffers::FlatBufferBuilder& get_fbb() { return fbb; }
+		flatbuffers::FlatBufferBuilder& fbb() { return _fbb; }
 
 		static size_t roundDownToAlignment(size_t size) {
 			return size & ~(buffer_minalign - 1);
 		}
 
 	private:
-		flatbuffers::FlatBufferBuilder fbb;
+		flatbuffers::FlatBufferBuilder _fbb;
 	};
 }

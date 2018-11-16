@@ -24,10 +24,10 @@ void fillBufferWithImageData(flatbuffers::FlatBufferBuilder& fbb) {
 }
 
 void exampleImage() {
-	int bufsize = Config::image_width * Config::image_height + 64;
+	int bufsize = Config::image_width * Config::image_height + 128;
 	char* my_buffer = new char[bufsize];
 	BorrowedBuffer prealloc(my_buffer, bufsize);
-	fillBufferWithImageData(prealloc.get_fbb());
+	fillBufferWithImageData(prealloc.fbb());
 	delete[] my_buffer;
 }
 
