@@ -12,7 +12,8 @@ img = Image.GetRootAsImage(buf, 0)
 s = """
 Width = %d
 Height = %d
+Timestamp = %d
 Pixels = %s
-""" % (img.Dim().Width(), img.Dim().Height(), img.PixelsAsNumpy())
+""" % (img.Dim().Width(), img.Dim().Height(), img.Timestamp(), img.PixelsAsNumpy())
 
 print(s)
