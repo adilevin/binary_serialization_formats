@@ -36,4 +36,9 @@
   <ItemGroup>
     <CustomBuild Include="simpleObj.fbs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="prelink.bat">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -1,11 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Label="UserMacros">
+    <iTeroRTH>C:\gitrep\iTeroRTH</iTeroRTH>
+    <iTeroRTHOutDir>$(iTeroRTH)\bin\$(Configuration)\$(Platform)\</iTeroRTHOutDir>
+    <Dependencies>(Cadent.infra.gc.dll, Cadent.infra.gc.lib)</Dependencies>
+    <GC_API>__declspec(dllexport)</GC_API>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\$(Platform)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\flatbuffers-1.9.0\include;$(SolutionDir)\fb_helpers;$(SolutionDir)\my_types\generated\cpp</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(iTeroRTH)\projects\Infra\gc;$(SolutionDir)\flatbuffers-1.9.0\include;$(SolutionDir)\fb_helpers;$(SolutionDir)\my_types\generated\cpp</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <CustomBuild>
       <Command>..\flatc.exe --cpp -o generated\cpp %(FullPath)</Command>
@@ -13,6 +21,26 @@
       <LinkObjects>false</LinkObjects>
       <Outputs>generated\cpp\%(FileName)_generated.h</Outputs>
     </CustomBuild>
+    <PreLinkEvent>
+      <Command>
+      </Command>
+    </PreLinkEvent>
+    <Link>
+      <AdditionalLibraryDirectories>$(OutDir)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BuildMacro Include="iTeroRTH">
+      <Value>$(iTeroRTH)</Value>
+    </BuildMacro>
+    <BuildMacro Include="iTeroRTHOutDir">
+      <Value>$(iTeroRTHOutDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="Dependencies">
+      <Value>$(Dependencies)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GC_API">
+      <Value>$(GC_API)</Value>
+    </BuildMacro>
+  </ItemGroup>
 </Project>

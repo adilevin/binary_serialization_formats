@@ -1,6 +1,7 @@
 #pragma once
 
 #include "flatbuffers/flatbuffers.h"
+#include "Ibin_buffer.h"
 
 namespace fb_helpers {
 
@@ -49,11 +50,36 @@ namespace fb_helpers {
 
 		flatbuffers::FlatBufferBuilder& fbb() { return _fbb; }
 
+		template<typename T> const char* finish(flatbuffers::Offset<T> root) {
+			_fbb.Finish(root);
+			return (const char*)_fbb.GetBufferPointer();
+		}
+
+	private:
+
 		static size_t roundDownToAlignment(size_t size) {
 			return size & ~(buffer_minalign - 1);
 		}
 
 	private:
 		flatbuffers::FlatBufferBuilder _fbb;
+	};
+
+	// A FlatBufferBuilder, bundles with a custom allocator
+	class BorrowedBinBuffer : public BorrowedBuffer {
+	public:
+
+		static const size_t buffer_minalign = 8U;
+
+		BorrowedBinBuffer(gc_ns::Ibin_buffer& _bin_buffer) :
+			BorrowedBuffer((char*)_bin_buffer.data(), _bin_buffer.get_capacity()),
+			bin_buffer(_bin_buffer) {}
+
+		template<typename T> void finish(flatbuffers::Offset<T> root) {
+			bin_buffer.set_start(BorrowedBuffer::finish(root));
+		}
+		
+	private:
+		gc_ns::Ibin_buffer& bin_buffer;
 	};
 }
