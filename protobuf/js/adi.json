@@ -1,0 +1,13 @@
+{
+  "individuals": [
+    {
+      "firstName": "Johnny", "lastName": "Does",
+      "age": 42
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "age": 40
+    }
+  ]
+}

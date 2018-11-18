@@ -1,0 +1,1 @@
+node ./pb2son.js < 1.bin
