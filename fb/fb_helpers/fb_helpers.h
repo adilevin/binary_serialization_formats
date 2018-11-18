@@ -76,7 +76,10 @@ namespace fb_helpers {
 			bin_buffer(_bin_buffer) {}
 
 		template<typename T> void finish(flatbuffers::Offset<T> root) {
-			bin_buffer.set_start(BorrowedBuffer::finish(root));
+			const char* start = BorrowedBuffer::finish(root);
+			const char* end = ((const char*)bin_buffer.data() + bin_buffer.get_capacity());
+			bin_buffer.set_start(start);
+			bin_buffer.set_size((gc_ns::Ibin_buffer::size_type)(end - start));
 		}
 		
 	private:

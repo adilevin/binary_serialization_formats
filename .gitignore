@@ -6,3 +6,4 @@
 /fb/ipch
 *.suo
 bin
+*.user

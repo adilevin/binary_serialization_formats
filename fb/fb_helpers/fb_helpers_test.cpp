@@ -35,7 +35,8 @@ namespace fb_helpers
 			bb.finish(o);
 
 			const unsigned char* h = binbuf.get_data();
-			auto s = GetSimpleObj(h);
+			std::string copied_buf(h, h + binbuf.get_size());
+			auto s = GetSimpleObj(copied_buf.c_str());
 			Assert::IsTrue(s->a() == 1);
 			Assert::IsTrue(s->b() == 2);
 		}

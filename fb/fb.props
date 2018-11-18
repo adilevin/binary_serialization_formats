@@ -16,10 +16,10 @@
       <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <CustomBuild>
-      <Command>..\flatc.exe --cpp -o generated\cpp %(FullPath)</Command>
-      <Message>Generating C++ code from %(FileName)%(Extension)</Message>
+      <Command>..\flatc.exe --cpp -o generated\cpp %(FullPath) &amp;&amp; ..\flatc.exe --python -o generated\python %(FullPath)</Command>
+      <Message>Generating C++ and Python code from %(FileName)%(Extension)</Message>
       <LinkObjects>false</LinkObjects>
-      <Outputs>generated\cpp\%(FileName)_generated.h</Outputs>
+      <Outputs>generated\cpp\%(FileName)_generated.h;generated\python\generated_code\%(FileName).py</Outputs>
     </CustomBuild>
     <PreLinkEvent>
       <Command>
