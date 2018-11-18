@@ -9,28 +9,14 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace fb_helpers
 {		
-	TEST_CLASS(BorrowedBufferTests)
+	TEST_CLASS(BuilderFromBinBufferTests)
 	{
 	public:
 		
-		TEST_METHOD(BorrowedBufferHappyPath)
-		{
-			char buf[256];
-			BorrowedBuffer bb(buf, sizeof(buf));
-			auto o = CreateSimpleObj(bb.fbb(), 1, 2);
-			bb.fbb().Finish(o);
-
-			uint8_t* b = bb.fbb().GetBufferPointer();
-
-			auto s = GetSimpleObj(b);
-			Assert::IsTrue(s->a() == 1);
-			Assert::IsTrue(s->b() == 2);
-		}
-
-		TEST_METHOD(borrowed_bin_buffer)
+		TEST_METHOD(BuilderFromBinBuffer_works_for_passing_flatbuffers)
 		{
 			gc_ns::bin_buffer binbuf(256);
-			BorrowedBinBuffer bb(binbuf);
+			BuilderFromBinBuffer bb(binbuf);
 			auto o = CreateSimpleObj(bb.fbb(), 1, 2);
 			bb.finish(o);
 

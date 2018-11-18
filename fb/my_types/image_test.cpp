@@ -40,7 +40,7 @@ namespace fbtests
 
 	public:
 		
-		TEST_METHOD(CreateImageTest)
+		TEST_METHOD(CreateImage_works)
 		{
 			FlatBufferBuilder fbb;
 			auto pixels = fillImageData(fbb);
@@ -52,7 +52,7 @@ namespace fbtests
 			
 		}
 
-		TEST_METHOD(ImageBuilderTest)
+		TEST_METHOD(ImageBuilder_works)
 		{
 			FlatBufferBuilder fbb;
 			auto pixels = fillImageData(fbb);

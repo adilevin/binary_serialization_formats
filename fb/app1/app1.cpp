@@ -16,14 +16,14 @@ struct Config {
 	static const size_t image_height = 5;
 };
 
-void fillBufferWithImageData(BorrowedBinBuffer& prealloc) {
+void fillBufferWithImageData(BuilderFromBinBuffer& builder) {
 	unsigned char* pixels_buf;
-	auto pixels = prealloc.fbb().CreateUninitializedVector(Config::image_width * Config::image_height, &pixels_buf);
+	auto pixels = builder.fbb().CreateUninitializedVector(Config::image_width * Config::image_height, &pixels_buf);
 	for (int i = 0;i < Config::image_width * Config::image_height;++i)
 		pixels_buf[i] = 15;
 	uint64_t timestamp = 100;
-	auto img = CreateImage(prealloc.fbb(), &Dimensions(Config::image_width, Config::image_height), pixels, timestamp);
-	prealloc.finish(img);
+	auto img = CreateImage(builder.fbb(), &Dimensions(Config::image_width, Config::image_height), pixels, timestamp);
+	builder.finish(img);
 }
 
 void write_to_file(const gc_ns::Ibin_buffer& binbuf, const char* filename) {
@@ -34,8 +34,8 @@ void write_to_file(const gc_ns::Ibin_buffer& binbuf, const char* filename) {
 
 void createAndWriteToFile() {
 	gc_ns::bin_buffer binbuf(Config::image_width * Config::image_height + 128);
-	BorrowedBinBuffer prealloc(binbuf);
-	fillBufferWithImageData(prealloc);
+	BuilderFromBinBuffer builder(binbuf);
+	fillBufferWithImageData(builder);
 	std::cout << "Writing img.dat\n";
 	write_to_file(binbuf, "img.dat");
 }
