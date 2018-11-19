@@ -5,8 +5,8 @@
 
 namespace fb_helpers {
 
-	class ReallocNotAllowedException { public: ReallocNotAllowedException() {} };
-	class BufferInsufficientException { public: BufferInsufficientException() {} };
+	struct ReallocNotAllowedException { };
+	struct BufferInsufficientException { };
 
 	// A custom allocator for flatbuffers, that simply returns a pointer to a pre-allocated buffer.
 	// It does not allocate and does not deallocate. In case the original buffer's size is not enough, it will throw an exception.
@@ -43,7 +43,8 @@ namespace fb_helpers {
 		BuilderFromBinBuffer(gc_ns::Ibin_buffer& _bin_buffer) :
 			bin_buffer(_bin_buffer),
 			custom_allocator(bin_buffer.data(), bin_buffer.get_capacity()),
-			_fbb(bin_buffer.get_capacity(), &custom_allocator) {}
+			_fbb(bin_buffer.get_capacity() - 8, // The -8 here is because FlatBuffersBuilder internally applies alignment
+				&custom_allocator) {}
 
 		flatbuffers::FlatBufferBuilder& fbb() { return _fbb; }
 
